@@ -1,10 +1,17 @@
 //importa as funções necessárias do firebase
-import { initializeApp } from "";
-import { getAuth, GoogleProvider, signInWithPopup, signOut, onAuthStateChaged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "";
-import { getFirestore, setDoc, doc } from "";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+import { getAuth, GoogleProvider, signInWithPopup, signOut, onAuthStateChaged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 //configuração do Firebase
-
+const firebaseConfig = {
+    apiKey: "AIzaSyCRQeyouhQeqjTPjOai3immdRVvqrkjEWA",
+    authDomain: "fireopenid.firebaseapp.com",  
+    projectId: "fireopenid",  
+    storageBucket: "fireopenid.firebasestorage.app",  
+    messagingSenderId: "874472237952",
+    appId: "1:874472237952:web:ef8868c05e3d5affa82f65"
+  };
 
 //inicializa o firebase
 const app = initializeApp(firebaseConfig);
@@ -74,3 +81,29 @@ signIn.addEventListener('click', (event) => {
 
     //realiza o login com e-mail e senha
 })
+
+signIn.addEventListener('click', (event) => {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+    const auth = getAuth(); // Configura o serviço de autenticação
+
+    // Realiza o login com e-mail e senha
+    signInWithEmailAndPassword(auth, email,password)
+    .then((userCredential) => {
+        showMessage('Usuário logado com sucesso', 'signInMessage'); // Exibe mensagem de sucesso
+        const user = userCredential.user;
+
+        // Salva o ID do usuário no localStorage
+        localStorage.setItem('loggedInUserId', user.uid);
+
+        window.location.href = 'homepage.html'; // Redireciona para a página inicial
+    })
+    .catch((error) => {
+        const errorCode = error.code;
+        if (errorCode === 'auth/invalid-credential') {
+            showMessage('Email ou senha incorreta', 'signInMessage')
+        } else {
+            showMessage('Essa conta não existe', 'signInMessage');
+        }
+    });
+});
