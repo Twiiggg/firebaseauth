@@ -15,4 +15,3 @@ signInButton.addEventListener('click', function() {
     signInForm.style.display = "block";
     signUpForm.style.display = "none";
 });
-

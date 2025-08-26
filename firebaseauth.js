@@ -1,6 +1,6 @@
 //importa as funções necessárias do firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAuth, GoogleProvider, signInWithPopup, signOut, onAuthStateChaged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChaged, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import { getFirestore, setDoc, doc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 //configuração do Firebase
@@ -74,15 +74,7 @@ const signIn = document.getElementById('submitSignIn');
 signIn.addEventListener('click', (event) => {
     event.preventDefault(); //previne o comportamente padrão do botão
 
-    //adiciona os dados do formulário de login
-    const email = document.getElementById('rEmail').value;
-    const password = document.getElementById('rPassword').value;
-    const auth = getAuth(); //configura o serviço de autenticação
-
-    //realiza o login com e-mail e senha
-})
-
-signIn.addEventListener('click', (event) => {
+    //adiciona os dados do formulário de login      
     const email = document.getElementById('email').value;
     const password = document.getElementById('password').value;
     const auth = getAuth(); // Configura o serviço de autenticação
