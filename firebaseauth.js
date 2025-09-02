@@ -12,90 +12,89 @@ const firebaseConfig = {
     messagingSenderId: "874472237952",
     appId: "1:874472237952:web:ef8868c05e3d5affa82f65"
   };
-
-//inicializa o firebase
+// Inicializa o firebase
 const app = initializeApp(firebaseConfig);
-
-//função para exibir mensagens temporárias na interface
+ 
+// Função para exibir mensagens temporárias na interface
 function showMessage(message, divId) {
     var messageDiv = document.getElementById(divId);
     messageDiv.style.display = "block";
     messageDiv.innerHTML = message;
-    message.style.opacity = 1;
+    messageDiv.style.opacity = 1;
     setTimeout(function() {
         messageDiv.style.opacity = 0;
-    }, 5000); //a mensagem desaparece após 5 segundos
+    }, 5000); //A mensagem desaparece após 5 segundos
 }
-
-//lógia de cadastro de novos usuários
+ 
+// Lógica de cadastro de novos usuários
 const signUp = document.getElementById('submitSignUp');
 signUp.addEventListener('click', (event) => {
-    event.preventDefault(); //previne o comportamento padrão do botão
-
-    //adicionar os dados do formulário de cadastro
-    const email = document.getElementById('rEmail').value;
-    const password = document.getElementById('rPassword').value;
-    const firstName = document.getElementById('fName').value;
-    const lastName = document.getElementById('lName').value;
-
-    const auth = getAuth(); //configura o serviço de autenticação
-    const db = getFirestore(); //conecta ao firestore
-
-    //cria uma conta com e-mail e senha
-    createUserWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-        const user = userCredential.user; //usuário autenticado
-        const userData = { email, firstName, lastName }; //dados do usuário para salvar
-
-        showMessage('Conta criada com sucesso', 'signUpMessage'); //exibe mensagem de sucesso
-
-        //salva os dados do usuário no firestore
+    event.preventDefault(); //Previne o comportamento padrão do botão
+ 
+    // Adicionar os dados do formulário de cadastro
+    const email = document.getElementById("rEmail").value;
+    const password = document.getElementById("rPassword").value;
+    const firstName = document.getElementById("fName").value;
+    const lastName = document.getElementById("lName").value
+ 
+    const auth = getAuth(); // Configura o serviço de autenticação
+    const db = getFirestore();
+ 
+    // Cria uma conta com e-mail e senha
+    createUserWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        const user = userCredential.user; //Usuário Autenticado
+        const userData = { email, firstName, lastName}; // Dados do usuário para salvar
+        console.log("TESTESTESTSTSETES")
+        showMessage("Conta criada com sucesso", "signUpMessage"); // Exibe mensagem de sucesso
+ 
+        //Salva os dados do usuário no Firestore
         const docRef = doc(db, "users", user.uid);
         setDoc(docRef, userData)
-        .then (() => {
-            window.location.href = 'index.html'; //redireciona para a página de login após o cadastro
+        .then(() => {
+            window.location.href = "index.html"; // Redireciona para a página de login após o cadastro
         })
         .catch((error) => {
-            console.error("Error writing document", error);
-        });
+            console.error("Erro writing document", error);
+        })
     })
     .catch((error) => {
         const errorCode = error.code;
-        if (errorCode == 'auth/email-already-in-use') {
-            showMessage('Endereço de email já existe', 'signUp');
+        if (errorCode == "auth/email-already-in-use") {
+            showMessage("Endereço de email já existe")
         } else {
-            showMessage('Não é possível criar usuário', 'signUpMessage');
+            showMessage("Não é possível criar usuário", "signUpMessage");
         }
     });
 });
-
-//Lógica de login de usuários existentes
-const signIn = document.getElementById('submitSignIn');
-signIn.addEventListener('click', (event) => {
-    event.preventDefault(); //previne o comportamente padrão do botão
-
-    //adiciona os dados do formulário de login      
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
+ 
+// Lógica de login de usuários existentes
+ 
+const signIn = document.getElementById("submitSignIn");
+signIn.addEventListener("click", (event) => {
+    event.preventDefault(); // Previne o comportamento padrão do botão
+ 
+    // Adiciona os dados do formulario de login
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
     const auth = getAuth(); // Configura o serviço de autenticação
-
+ 
     // Realiza o login com e-mail e senha
-    signInWithEmailAndPassword(auth, email,password)
-    .then((userCredential) => {
-        showMessage('Usuário logado com sucesso', 'signInMessage'); // Exibe mensagem de sucesso
+    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+        showMessage("Usuário logado com sucesso", "signInMessage"); // Exibe mensagem de sucesso
         const user = userCredential.user;
-
+ 
         // Salva o ID do usuário no localStorage
-        localStorage.setItem('loggedInUserId', user.uid);
-
-        window.location.href = 'homepage.html'; // Redireciona para a página inicial
+        localStorage.setItem("loggedInUserId", user.uid);
+        console.log("USER UID: " + user.uid)
+ 
+        window.location.href = "homepage.html"; //Redireciona para a página inicial
     })
     .catch((error) => {
         const errorCode = error.code;
-        if (errorCode === 'auth/invalid-credential') {
-            showMessage('Email ou senha incorreta', 'signInMessage')
+        if (errorCode === "auth/invalid-credential") {
+            showMessage("Email ou Senha incorreta", "signInMessage");
         } else {
-            showMessage('Essa conta não existe', 'signInMessage');
+            showMessage("Essa conta não existe", "signInMessage")
         }
     });
 });
