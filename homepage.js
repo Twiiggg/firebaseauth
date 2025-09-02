@@ -26,7 +26,7 @@ onAuthStateChanged(auth, (user) => {
     //se o ID estiver no localStorage, tenta obter os dados do firestore
     if (loggedInUserId) {
         console.log(user);
-        const docRef = doc(db, "Users", loggedInUserId); // referecia ao doc do user no firestore
+        const docRef = doc(db, "users", loggedInUserId); // referecia ao doc do user no firestore
 
         getDoc(docRef) // busca o doc
         .then((docSnap) => {

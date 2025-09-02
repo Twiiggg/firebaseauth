@@ -80,13 +80,13 @@ signIn.addEventListener("click", (event) => {
     const auth = getAuth(); // Configura o serviço de autenticação
  
     // Realiza o login com e-mail e senha
-    signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
         showMessage("Usuário logado com sucesso", "signInMessage"); // Exibe mensagem de sucesso
         const user = userCredential.user;
  
         // Salva o ID do usuário no localStorage
         localStorage.setItem("loggedInUserId", user.uid);
-        console.log("USER UID: " + user.uid)
  
         window.location.href = "homepage.html"; //Redireciona para a página inicial
     })

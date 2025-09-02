@@ -2,7 +2,7 @@
 const signUpButton = document.getElementById('signUpButton');
 const signInButton = document.getElementById('signInButton');
 const signInForm = document.getElementById('signIn');
-const signUpForm = document.getElementById('signUp');
+const signUpForm = document.getElementById('signup');
 
 //quando o botão de cadastro é clicado, esconde o formulário de login e mostra o de cadastro
 signUpButton.addEventListener('click', function() {
