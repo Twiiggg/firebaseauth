@@ -1,6 +1,6 @@
 //importa as funções necessárias do firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAuth, GoogleProvider, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getAuth, GoogleAuthProvider, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
 
 //configuração do firebase
@@ -11,7 +11,7 @@ const firebaseConfig = {
     storageBucket: "fireopenid.firebasestorage.app",  
     messagingSenderId: "874472237952",
     appId: "1:874472237952:web:ef8868c05e3d5affa82f65"  
-  };
+};
 
 //inicia o firebase
 const app = initializeApp(firebaseConfig);
