@@ -1,17 +1,19 @@
 //importa as funções necessárias do firebase
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
+import { getAuth, signOut, onAuthStateChanged} from "https://www.gstatic.com/firebasejs/12.1.0/firebase-auth.js";
 import { getFirestore, getDoc, doc } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+import { firebaseConfig } from "./firebaseConfig.js";
+// template de configuração do firebaseConfig.js 
+// const firebaseConfig = {
+//     apiKey: "",
+//     authDomain: "",
+//     projectId: "",
+//     storageBucket: "",
+//     messagingSenderId: "",
+//     appId: ""  
+// };
 
 //configuração do firebase
-const firebaseConfig = {
-    apiKey: "AIzaSyCRQeyouhQeqjTPjOai3immdRVvqrkjEWA",
-    authDomain: "fireopenid.firebaseapp.com",  
-    projectId: "fireopenid",  
-    storageBucket: "fireopenid.firebasestorage.app",  
-    messagingSenderId: "874472237952",
-    appId: "1:874472237952:web:ef8868c05e3d5affa82f65"  
-};
 
 //inicia o firebase
 const app = initializeApp(firebaseConfig);
@@ -34,14 +36,16 @@ onAuthStateChanged(auth, (user) => {
             if (docSnap.exists()) {
                 const userData = docSnap.data();
                 document.getElementById('loggedUserFName').innerText = userData.firstName;
+                document.getElementById('loggedUserLName').innerText = userData.lastName ? userData.lastName : "no last name";
                 document.getElementById('loggedUserEmail').innerText = userData.email;
-                document.getElementById('loggedUserLName').innerText = userData.lastName;
+                userData.photoURL ? document.getElementById('loggedUserPhoto').src = userData.photoURL
+                : document.getElementById('photo').innerText = "no photo"
             } else {
                 console.log("ID não encontrado no Documento")
             }
         })
         .catch((error) => {
-            console.log("Documento não encontrado");
+            console.log("Documento não encontrado:", error);
         });
     } else {
         console.log("ID de User não encontrado no localStorage");
@@ -54,7 +58,7 @@ logoutButton.addEventListener('click', () => {
     localStorage.removeItem('loggedInUserId'); // remove o id do local storage
     signOut(auth) //faz o logout
     .then(() => {
-        window,location.href = 'index.html';
+        window.location.href = 'index.html';
     })
     .catch((error) => {
         console.error('Error logging out:', error)
